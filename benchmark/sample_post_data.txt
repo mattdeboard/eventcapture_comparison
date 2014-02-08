@@ -1,1 +1,1 @@
-event_type=test&ext_ref=abc&user_ref=dude3&data={"a": 1}
+event-type=test&ext-ref=abc&user-ref=dude3&data={"a": 1}
