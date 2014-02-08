@@ -51,22 +51,32 @@
                :result-set-fn first))
   "")
 
+(defn server-error [error]
+  (-> (response error)
+      (status 500)))
+
 (defn handle-event-post [event-type ext-ref user-ref data]
-  {:pre [(string? event-type)
-         (not (strings/blank? event-type))
-         (string? data)
-         (json/read-str data)]}
-  (insert-event {:event_type event-type
-                 :ext_ref ext-ref
-                 :user_ref user-ref
-                 :data data}))
+  (rule (string? event-type)
+        [:event-type "Event type must be a non-empty string"])
+  (rule (not (strings/blank? event-type))
+        [:event-type "Event type must be non-empty string"])
+  (rule (string? data) [:data "Data must be a string."])
+  (rule (json/read-str data) [:data "Data must be a string."])
+  (if (errors? :event-type :data)
+    (server-error (get-errors))
+    (insert-event {:event_type event-type
+                   :ext_ref ext-ref
+                   :user_ref user-ref
+                   :data data})))
 
 (defroutes app-routes
   (GET "/" [] "It works!")
-  (POST "/capture" [event_type ext_ref user_ref data]
-        (handle-event-post event_type ext_ref user_ref data))
+  (POST "/capture" [event-type ext-ref user-ref data]
+        (handle-event-post event-type ext-ref user-ref data))
   (route/resources "/")
   (route/not-found "Not Found"))
 
 (def app
-  (handler/site app-routes))
+  (-> (routes app-routes)
+      handler/site
+      wrap-noir-validation))
