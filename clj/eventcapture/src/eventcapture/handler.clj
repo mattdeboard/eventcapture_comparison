@@ -57,12 +57,12 @@
 
 (defn handle-event-post [event-type ext-ref user-ref data]
   (rule (string? event-type)
-        [:event-type "Event type must be a non-empty string"])
+        [:event_type "Event type must be a non-empty string"])
   (rule (not (strings/blank? event-type))
-        [:event-type "Event type must be non-empty string"])
+        [:event_type "Event type must be non-empty string"])
   (rule (string? data) [:data "Data must be a string."])
   (rule (json/read-str data) [:data "Data must be a string."])
-  (if (errors? :event-type :data)
+  (if (errors? :event_type :data)
     (server-error (get-errors))
     (insert-event {:event_type event-type
                    :ext_ref ext-ref
@@ -71,8 +71,8 @@
 
 (defroutes app-routes
   (GET "/" [] "It works!")
-  (POST "/capture" [event-type ext-ref user-ref data]
-        (handle-event-post event-type ext-ref user-ref data))
+  (POST "/capture" [event_type ext_ref user_ref data]
+        (handle-event-post event_type ext_ref user_ref data))
   (route/resources "/")
   (route/not-found "Not Found"))
 
