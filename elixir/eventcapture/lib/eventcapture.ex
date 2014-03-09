@@ -18,7 +18,3 @@ defmodule Eventcapture.Sup do
     supervise(tree, strategy: :one_for_all)
   end
 end
-
-defmodule Eventcapture do
-  use Application.Behaviour
-end
