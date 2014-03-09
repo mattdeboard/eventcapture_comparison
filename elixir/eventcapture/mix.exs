@@ -24,8 +24,6 @@ defmodule Eventcapture.Mixfile do
       {:ecto, github: "elixir-lang/ecto"},
       {:postgrex, github: "ericmj/postgrex"},
       {:plug, github: "elixir-lang/plug"},
-      {:httpotion, github: "myfreeweb/httpotion"},
-      {:json, github: "cblage/elixir-json"}
     ]
   end
 end
