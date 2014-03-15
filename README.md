@@ -1,7 +1,7 @@
 eventcapture comparison
 =======================
 
-Comparison of Python, Go, and Clojure implementations of a simple HTTP service to capture and store generic event data.
+Comparison of Go, Elixir and Clojure implementations of a simple HTTP service to capture and store generic event data.
 
 Since the goal is just to compare, the requirements are simplified and the implementations are mostly done with one main source file.
 
@@ -30,7 +30,7 @@ Clojure -> Compojure
 
 Golang -> Martini
 
-Python -> Flask
+Elixir -> Phoenix
 
 Setup Instructions
 ------------------
@@ -38,3 +38,5 @@ Setup Instructions
 1. Have a Postgres v9.3 or higher running on you localhost.
 2. Execute 'init.sql' against your local Postgres server (this will create a user and an `event` database)
 3. Execute 'create_eventlog_table.sql' in the context of the `event` database.
+4. Start the server process for the language you wish to test
+5. Execute `compare.sh [<# of requests> [<port>]]`
